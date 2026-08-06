@@ -20,7 +20,7 @@ class BotaoPrimario extends StatelessWidget {
          backgroundColor: AppColors.roxo, // Cor de fundo do botão
          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
          shape: RoundedRectangleBorder(
-           borderRadius: BorderRadius.circular(30),
+           borderRadius: BorderRadius.circular(20),
          ),
        ),
        child: Text(

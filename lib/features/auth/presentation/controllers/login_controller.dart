@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tomora/features/auth/data/services/auth_service.dart';
+import 'package:tomora/routes/app_routes.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController();
@@ -18,15 +20,33 @@ class LoginController extends GetxController {
     final email = emailController.text.trim();
     final password = passwordController.text;
 
-    if (email.isEmpty) {
-      errorMessage.value = 'O campo de email é obrigatório.';
-      loading.value = false;
-      return;
+    try {
+    final authService = Get.find<AuthService>();
+
+    // 1. Faz login e salva o token
+    await authService.login(
+      email: emailController.text.trim(),
+      password: passwordController.text,
+    );
+
+    // 2. Busca os dados do usuário
+    final user = await authService.getMe();
+
+    // 3. Navega de acordo com o role
+    if (user.role == 'MEDICADO') {
+      Get.offAllNamed(AppRoutes.screenMedicado);
+    } else if (user.role == 'AUXILIAR') {
+      Get.offAllNamed(AppRoutes.screenAuxiliar);
+    } else {
+      throw Exception('Tipo de conta desconhecido');
     }
-    if (password.isEmpty) {
-      errorMessage.value = 'O campo de senha é obrigatório.';
-      loading.value = false;
-      return;
-    }
+  } catch (e) {
+    print('======= ERRO NO LOGIN =======');
+  print(e);
+  print('=============================');
+    errorMessage.value = e.toString().replaceAll('Exception: ', '');
+  } finally {
+    loading.value = false;
   }
 }
+  }

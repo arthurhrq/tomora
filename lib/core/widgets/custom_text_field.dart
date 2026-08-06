@@ -27,13 +27,6 @@ class CampoPersonalizado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  // Pega o tamanho da tela para definir o tamanho do campo de texto
-  final size = MediaQuery.of(context).size;
-  final width = size.width;
-
-  //Valores responsivos baseados na largura da tela
-  final double verticalPadding = width * 0.024; // 2.4% da largura da tela
-
     return 
     Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -74,19 +67,19 @@ class CampoPersonalizado extends StatelessWidget {
                   prefixIcon: prefixIcon,
                   filled: true,
                   fillColor: AppColors.campo,
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: verticalPadding,
-                    horizontal: 16.0,
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 17.0,
+                    horizontal: 19.0,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(17.0),
                     borderSide: BorderSide(
                       color: AppColors.contorno,
                       width: 1.0
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(17.0),
                     borderSide: BorderSide(
                       color: AppColors.branco,
                       width: 1.2

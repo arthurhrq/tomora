@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tomora/core/theme/app_colors.dart';
 import 'package:tomora/core/widgets/custom_text_field.dart';
-import 'package:tomora/features/auth/presentation/controllers/login_controller.dart';
+import 'package:tomora/features/auth/presentation/controllers/sign_controller.dart';
 
-class LoginForm extends StatelessWidget {
+class SignForm extends StatelessWidget {
 
-  final controller = Get.find<LoginController>();
+  final controller = Get.find<SignController>();
+  
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class LoginForm extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Login',
+              'Registre-se',
               style: TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 32,
@@ -31,7 +32,7 @@ class LoginForm extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Entre em sua conta',
+              'Crie sua conta',
               style: TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 22,
@@ -40,6 +41,19 @@ class LoginForm extends StatelessWidget {
               ),
             ),
           ],
+        ),
+        SizedBox(height: 16),
+        SizedBox(
+          width: 320,
+          child: CampoPersonalizado(
+            title: 'Nome',
+            controller: controller.nameController,
+            hintText: 'Digite seu nome',
+            prefixIcon: Padding(
+              padding: const EdgeInsets.only(left: 11.0),
+              child: Icon(Icons.person, color: AppColors.branco),
+            ),
+          ),
         ),
         SizedBox(height: 16),
         SizedBox(
