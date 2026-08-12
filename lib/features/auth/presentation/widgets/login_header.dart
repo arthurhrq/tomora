@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tomora/core/constants/app_images.dart';
-import 'package:tomora/core/theme/app_colors.dart';
-import 'package:tomora/core/theme/app_text.dart';
 
 class LoginHeader extends StatelessWidget {
 

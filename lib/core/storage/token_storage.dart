@@ -23,5 +23,8 @@ class TokenStorage {
   }
 
   // Verifica se existe token salvo
+  // Por que não utilizar o .hasData() do GetStorage? 
+  // Porque ele verifica se existe algum dado, mas não necessariamente o token. 
+  // Então, é melhor verificar se o token específico existe.
   bool get hasToken => getToken() != null;
 }

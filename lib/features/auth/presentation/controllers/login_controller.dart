@@ -17,8 +17,6 @@ class LoginController extends GetxController {
   Future<void> login() async {
     errorMessage.value = '';
     loading.value = true;
-    final email = emailController.text.trim();
-    final password = passwordController.text;
 
     try {
     final authService = Get.find<AuthService>();

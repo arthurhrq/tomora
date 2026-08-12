@@ -5,7 +5,6 @@ import 'package:tomora/core/widgets/primary_button.dart';
 import 'package:tomora/features/auth/presentation/controllers/login_controller.dart';
 import 'package:tomora/features/auth/presentation/widgets/login_form.dart';
 import 'package:tomora/features/auth/presentation/widgets/login_header.dart';
-import 'package:tomora/routes/app_routes.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
