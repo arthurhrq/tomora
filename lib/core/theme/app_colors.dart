@@ -8,4 +8,5 @@ class AppColors {
   static const contorno = Color(0xFF62778A);
   static const branco = Color(0xFFFFFFFF);
   static const hinttext = Color(0xFFB3B7BB);
+  static const verde = Color(0xFFB9D4C5);
 }

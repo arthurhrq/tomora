@@ -7,7 +7,6 @@ import 'package:tomora/features/auth/presentation/widgets/already_have.dart';
 import 'package:tomora/features/auth/presentation/widgets/role_selector.dart';
 import 'package:tomora/features/auth/presentation/widgets/sign_form.dart';
 import 'package:tomora/features/auth/presentation/widgets/login_header.dart';
-import 'package:tomora/routes/app_routes.dart';
 
 class SignPage extends StatelessWidget {
   SignPage({super.key});

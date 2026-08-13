@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class ConnectionHeader extends StatelessWidget {
-  const ConnectionHeader({super.key});
-  final String description = '';
+  final String description;
+
+  const ConnectionHeader({
+    super.key,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +16,17 @@ class ConnectionHeader extends StatelessWidget {
       children: [
         SvgPicture.asset(
           'assets/icons/linking.svg',
-          width: 100,
-          height: 100,
+          width: 200,
+          height: 200,
         ),
         SizedBox(height: 16),
         Text(
-          'Conexáo de Contas',
+          'Conexão de Contas',
           style: TextStyle(
             fontFamily: 'Poppins',
             fontSize: 24,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
           ),
         ),
         SizedBox(height: 8),
@@ -32,7 +36,8 @@ class ConnectionHeader extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'Poppins',
             fontSize: 16,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
+            color: Colors.white
           ),
         ),
       ],

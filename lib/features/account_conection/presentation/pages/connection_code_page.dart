@@ -1,5 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:tomora/core/theme/app_colors.dart';
+import 'package:tomora/core/widgets/primary_button.dart';
 import 'package:tomora/features/account_conection/presentation/widgets/connection_code_display.dart';
 import 'package:tomora/features/account_conection/presentation/widgets/connection_header.dart';
 
@@ -18,13 +20,17 @@ class ConnectionCodePage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ConnectionHeader(),
+                  ConnectionHeader(
+                    description:
+                        'Esse é o código identificador que você deve informar ao seu auxiliar',
+                  ),
                   SizedBox(height: 24),
-                  ConnectionCodeDisplay(
-                    code: '123456',
-                    onCopy: () {
-                      
-                    },
+                  ConnectionCodeDisplay(code: '123456', onCopy: () {}),
+                  SizedBox(height: 22),
+                  SizedBox(
+                    width: 320,
+                    height: 60,
+                    child: BotaoPrimario(texto: 'Prosseguir', onPressed: () {}),
                   ),
                 ],
               ),
