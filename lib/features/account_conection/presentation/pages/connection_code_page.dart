@@ -1,5 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tomora/core/theme/app_colors.dart';
 import 'package:tomora/core/widgets/primary_button.dart';
 import 'package:tomora/features/account_conection/presentation/widgets/connection_code_display.dart';
@@ -10,13 +10,15 @@ class ConnectionCodePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String connectionCode = Get.arguments as String;
+
     return Scaffold(
       backgroundColor: AppColors.cordefundo,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.all(28),
+              padding: const EdgeInsets.all(28),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -24,13 +26,23 @@ class ConnectionCodePage extends StatelessWidget {
                     description:
                         'Esse é o código identificador que você deve informar ao seu auxiliar',
                   ),
-                  SizedBox(height: 24),
-                  ConnectionCodeDisplay(code: '123456', onCopy: () {}),
-                  SizedBox(height: 22),
+
+                  const SizedBox(height: 24),
+
+                  ConnectionCodeDisplay(
+                    code: connectionCode,
+                    onCopy: () {},
+                  ),
+
+                  const SizedBox(height: 22),
+
                   SizedBox(
                     width: 320,
                     height: 60,
-                    child: BotaoPrimario(texto: 'Prosseguir', onPressed: () {}),
+                    child: BotaoPrimario(
+                      texto: 'Prosseguir',
+                      onPressed: () {},
+                    ),
                   ),
                 ],
               ),
