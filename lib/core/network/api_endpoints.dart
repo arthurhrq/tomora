@@ -1,5 +1,5 @@
 class ApiEndpoints {
-  static const String baseUrl = 'http://192.168.98.12:3000/';
+  static const String baseUrl = 'https://tomora-server-remake.onrender.com/';
 
   // Authentication endpoints
   static const String login = 'api/login';

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tomora/core/theme/app_colors.dart';
 import 'package:tomora/core/widgets/primary_button.dart';
 import 'package:tomora/features/auth/presentation/controllers/login_controller.dart';
+import 'package:tomora/features/auth/presentation/widgets/first_time.dart';
 import 'package:tomora/features/auth/presentation/widgets/login_form.dart';
 import 'package:tomora/features/auth/presentation/widgets/login_header.dart';
 
@@ -30,6 +31,8 @@ class LoginPage extends StatelessWidget {
                     width: 320,
                     child: BotaoPrimario(texto: 'Entrar', onPressed: controller.login),
                   ),
+                  SizedBox(height: 24),
+                  FirstTime()
                 ],
               ),
             ),

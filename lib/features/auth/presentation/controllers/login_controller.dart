@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tomora/core/widgets/snackbar.dart';
 import 'package:tomora/features/auth/data/services/auth_service.dart';
 import 'package:tomora/routes/app_routes.dart';
 
@@ -30,10 +31,20 @@ class LoginController extends GetxController {
     // 2. Busca os dados do usuário
     final user = await authService.getMe();
 
+    print('2 - getMe realizado');
+    print('ID: ${user.id}');
+    print('Nome: ${user.name}');
+    print('Email: ${user.email}');
+    print('Role: ${user.role}');
+    print('Status: ${user.status}');
+
+
     // 3. Navega de acordo com o role
     if (user.role == 'MEDICADO') {
+      AppSnackbar.sucess('Login realizado com sucesso!');
       Get.offAllNamed(AppRoutes.screenMedicado);
     } else if (user.role == 'AUXILIAR') {
+      AppSnackbar.sucess('Login realizado com sucesso!');
       Get.offAllNamed(AppRoutes.screenAuxiliar);
     } else {
       throw Exception('Tipo de conta desconhecido');
@@ -43,6 +54,7 @@ class LoginController extends GetxController {
   print(e);
   print('=============================');
     errorMessage.value = e.toString().replaceAll('Exception: ', '');
+    AppSnackbar.error('Erro ao realizar login');
   } finally {
     loading.value = false;
   }

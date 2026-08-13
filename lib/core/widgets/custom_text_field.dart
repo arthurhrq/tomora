@@ -55,6 +55,13 @@ class CampoPersonalizado extends StatelessWidget {
                 obscureText: obscureText,
                 keyboardType: keyboardType,
                 enabled: enabled,
+                style: const TextStyle(
+                  color: AppColors.branco,
+                  fontFamily: 'Poppins',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+                cursorColor: AppColors.branco,
                 decoration: InputDecoration(
                   hintText: hintText,
                   hintStyle: const TextStyle(

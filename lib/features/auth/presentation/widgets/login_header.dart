@@ -22,7 +22,7 @@ class LoginHeader extends StatelessWidget {
         // Image.asset(AppImages.logo, width: 150, height: 150),
         // const SizedBox(height: 18),
         SizedBox(
-          height: 170,
+          height: 70,
         )
       ],
     );

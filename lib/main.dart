@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tomora/core/network/api_client.dart';
 import 'package:tomora/features/auth/data/services/auth_service.dart';
-import 'package:tomora/features/auth/presentation/pages/login_page.dart';
-import 'package:tomora/features/auth/presentation/pages/sign_page.dart';
+import 'package:tomora/routes/app_pages.dart';
 import 'package:tomora/routes/app_routes.dart';
 
 void main() async {
@@ -33,16 +31,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       initialRoute: AppRoutes.login,
-      getPages: [
-        GetPage(
-          name: AppRoutes.login,
-          page: () => LoginPage(),
-        ),
-        GetPage(
-          name: AppRoutes.sign,
-          page: () => SignPage(),
-        ),
-      ],
+      getPages: AppPages.pages,
     );
   }
 }

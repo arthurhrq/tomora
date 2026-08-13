@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tomora/features/account_conection/presentation/pages/connection_code_page.dart';
 import 'package:tomora/features/auth/presentation/controllers/login_controller.dart';
 import 'package:tomora/features/auth/presentation/controllers/sign_controller.dart';
 import 'package:tomora/features/auth/presentation/pages/login_page.dart';
@@ -20,6 +21,10 @@ class AppPages {
       binding: BindingsBuilder(() {
         Get.lazyPut(() => SignController());
       }),
+    ),
+    GetPage(
+      name: AppRoutes.screenMedicado,
+      page: () => const ConnectionCodePage(),
     ),
   ];
 }

@@ -24,6 +24,8 @@ class AuthService extends GetxService {
     },
   );
 
+
+
   print('Status: ${response.statusCode}');
   print('Body: ${response.body}');
   print('Body type: ${response.body.runtimeType}');
@@ -53,6 +55,32 @@ class AuthService extends GetxService {
 
   await _tokenStorage.saveToken(token);
 }
+
+Future<void> signUp({
+    required String name,
+    required String email,
+    required String password,
+    required String role,
+  }) async {
+    final response = await _api.post(
+      ApiEndpoints.signUp,
+      {
+        'name': name,
+        'email': email,
+        'password': password,
+        'role': role,
+      },
+    );
+    
+    if (response.status.hasError) {
+      final errorMsg = response.body is Map
+          ? (response.body['erro'] ??
+              response.body['error'] ??
+              'Erro ao criar conta')
+          : response.statusText ?? 'Erro ao criar conta';
+      throw Exception(errorMsg);
+    }
+  }
 
   // ====================== BUSCAR USUÁRIO LOGADO ======================
   // Chama /api/auth/me (já com o token no header automaticamente)
