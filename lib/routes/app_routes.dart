@@ -3,4 +3,6 @@ abstract class AppRoutes {
   static const String sign = '/sign';
   static const String screenMedicado = '/screen-medicado';
   static const String screenAuxiliar = '/screen-auxiliar';
+  static const String home = '/home';
+  static const String create = '/create';
 }
