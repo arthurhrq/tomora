@@ -61,10 +61,18 @@ class CreateReminderController extends GetxController {
         time: _formattedTime,
       );
 
-      // Agenda o alarme local desse aparelho pro novo lembrete
-      await Get.find<AlarmService>().scheduleReminder(createdReminder);
+      // Só agenda o alarme LOCAL neste aparelho se quem está criando é a
+      // conta MEDICADO. Quando é a conta AUXILIAR criando (de casa, por
+      // ex.), o lembrete só é salvo no banco — o alarme de verdade é
+      // montado no aparelho do medicado quando o dele sincroniza
+      // (HomeController), pra não tocar nos dois dispositivos.
+      if (currentUser.role == 'MEDICADO') {
+        await Get.find<AlarmService>().scheduleReminder(createdReminder);
+      }
 
       AppSnackbar.sucess('Lembrete criado com sucesso!');
+
+      // Retorna automaticamente pra Home.
       Get.back();
     } catch (e) {
       AppSnackbar.error('Erro ao criar lembrete');

@@ -55,8 +55,7 @@ class HomeController extends GetxController {
 
   /// Núcleo do carregamento: busca lembretes + histórico de hoje para os
   /// usuários relevantes (o próprio usuário, e o cuidador/medicado
-  /// vinculado, quando houver) e reagenda os alarmes locais deste
-  /// aparelho de acordo com o que veio do banco.
+  /// vinculado, quando houver).
   Future<void> _fetchAndSync({required bool showLoading}) async {
     try {
       if (showLoading) isLoading.value = true;
@@ -93,10 +92,15 @@ class HomeController extends GetxController {
         userIds,
       );
 
-      // Reagenda os alarmes locais deste aparelho de acordo com os
-      // lembretes atuais (garante que o alarme sempre reflita o banco,
-      // inclusive lembretes cadastrados remotamente pelo cuidador).
-      await Get.find<AlarmService>().rescheduleAll(reminders);
+      // Reagenda os alarmes LOCAIS deste aparelho de acordo com os
+      // lembretes atuais — mas só em contas MEDICADO. Uma conta
+      // AUXILIAR nunca deve tocar alarme no próprio celular: ela só
+      // gerencia/consulta o lembrete, quem toca de verdade é o
+      // aparelho do medicado (é o dele que passa por este mesmo
+      // caminho, com role == 'MEDICADO', e agenda o alarme real).
+      if (currentUser.role == 'MEDICADO') {
+        await Get.find<AlarmService>().rescheduleAll(reminders);
+      }
     } finally {
       if (showLoading) isLoading.value = false;
     }
@@ -167,11 +171,16 @@ class HomeController extends GetxController {
     }
   }
 
-  /// Exclui (desativa) o lembrete e cancela o alarme local dele.
+  /// Exclui (desativa) o lembrete e cancela o alarme local dele
+  /// (só existe alarme local pra cancelar em contas MEDICADO).
   Future<void> deleteReminder(ReminderModel reminder) async {
     try {
       await repository.deleteReminder(reminder.id);
-      await Get.find<AlarmService>().cancelReminder(reminder.id);
+
+      final currentUser = Get.find<UserController>().user;
+      if (currentUser.role == 'MEDICADO') {
+        await Get.find<AlarmService>().cancelReminder(reminder.id);
+      }
 
       AppSnackbar.sucess('Lembrete excluído.');
       await loadHome();

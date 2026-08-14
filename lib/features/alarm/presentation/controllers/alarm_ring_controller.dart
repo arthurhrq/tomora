@@ -1,6 +1,7 @@
 import 'package:alarm/alarm.dart';
 import 'package:get/get.dart';
 import 'package:tomora/core/services/alarm_service.dart';
+import 'package:tomora/core/services/notification_service.dart';
 import 'package:tomora/core/widgets/snackbar.dart';
 import 'package:tomora/features/auth/presentation/controllers/user_controller.dart';
 import 'package:tomora/features/home/data/repository/reminder_repository.dart';
@@ -22,6 +23,8 @@ class AlarmRingController extends GetxController {
 
   ReminderRepository get _repository => Get.find<ReminderRepository>();
   AlarmService get _alarmService => Get.find<AlarmService>();
+  NotificationService get _notificationService =>
+      Get.find<NotificationService>();
 
   /// Botão "Sim" - registra como tomado e para o alarme.
   Future<void> confirmTaken() async {
@@ -48,6 +51,7 @@ class AlarmRingController extends GetxController {
       );
 
       await Alarm.stop(alarmId);
+      await _notificationService.cancelAlarmNotification(alarmId);
 
       Get.back();
     } catch (e) {

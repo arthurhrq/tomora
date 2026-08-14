@@ -4,6 +4,7 @@ import 'package:tomora/core/theme/app_colors.dart';
 import 'package:tomora/core/widgets/primary_button.dart';
 import 'package:tomora/features/account_conection/presentation/widgets/connection_code_display.dart';
 import 'package:tomora/features/account_conection/presentation/widgets/connection_header.dart';
+import 'package:tomora/features/auth/presentation/controllers/user_controller.dart';
 import 'package:tomora/routes/app_routes.dart';
 
 class ConnectionCodePage extends StatelessWidget {
@@ -11,7 +12,13 @@ class ConnectionCodePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String connectionCode = Get.arguments as String;
+    // Normalmente o código vem por argumento (fluxo de cadastro/login).
+    // Mas quando a sessão é restaurada automaticamente ao reabrir o app
+    // (ver main.dart), navegamos direto pra essa rota sem argumento —
+    // nesse caso, usamos o id do usuário já carregado no UserController.
+    final args = Get.arguments;
+    final String connectionCode =
+        args is String ? args : Get.find<UserController>().user.id;
 
     return Scaffold(
       backgroundColor: AppColors.cordefundo,
