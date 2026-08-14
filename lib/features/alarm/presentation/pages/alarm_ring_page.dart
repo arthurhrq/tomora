@@ -39,45 +39,72 @@ class AlarmRingPage extends StatelessWidget {
         backgroundColor: AppColors.cordefundo,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(28),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 28,
+              vertical: 32,
+            ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.alarm,
-                  color: Colors.white,
-                  size: 90,
+                const Spacer(flex: 2),
+
+                Container(
+                  width: 116,
+                  height: 116,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.18),
+                      width: 1.5,
+                    ),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.alarm,
+                      color: Colors.white,
+                      size: 64,
+                    ),
+                  ),
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 32),
 
                 Text(
                   title,
                   textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    height: 1.2,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: 14),
 
-                Text(
-                  body,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 16,
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: 330,
+                  ),
+                  child: Text(
+                    body,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 18,
+                      height: 1.5,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
 
-                const SizedBox(height: 48),
+                const Spacer(flex: 2),
 
                 Obx(
                   () => SizedBox(
-                    width: 280,
-                    height: 58,
+                    width: double.infinity,
+                    height: 62,
                     child: BotaoPrimario(
                       texto: controller.loading.value
                           ? 'Aguarde...'
@@ -87,15 +114,17 @@ class AlarmRingPage extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 16),
+                const SizedBox(height: 14),
 
                 SizedBox(
-                  width: 280,
-                  height: 55,
+                  width: double.infinity,
+                  height: 60,
                   child: OutlinedButton(
                     onPressed: controller.confirmNotTaken,
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Colors.redAccent),
+                      side: const BorderSide(
+                        color: Colors.redAccent,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -104,21 +133,34 @@ class AlarmRingPage extends StatelessWidget {
                       'Não tomei',
                       style: TextStyle(
                         color: Colors.redAccent,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
 
                 TextButton(
                   onPressed: controller.snooze,
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 14,
+                    ),
+                  ),
                   child: const Text(
                     'Adiar 5 minutos',
-                    style: TextStyle(color: Colors.white70),
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
+
+                const Spacer(),
               ],
             ),
           ),

@@ -5,4 +5,5 @@ abstract class AppRoutes {
   static const String screenAuxiliar = '/screen-auxiliar';
   static const String home = '/home';
   static const String create = '/create';
+  static const String faq = '/faq';
 }

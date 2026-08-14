@@ -9,6 +9,7 @@ import 'package:tomora/features/auth/presentation/pages/login_page.dart';
 import 'package:tomora/features/auth/presentation/pages/sign_page.dart';
 import 'package:tomora/features/create_reminder/presentation/controllers/create_reminder_controller.dart';
 import 'package:tomora/features/create_reminder/presentation/pages/create_reminder_page.dart';
+import 'package:tomora/features/faq/presentation/pages/faq_page.dart';
 import 'package:tomora/features/home/presentation/controllers/home_controller.dart';
 import 'package:tomora/features/home/presentation/pages/home_page.dart';
 import 'package:tomora/routes/app_routes.dart';
@@ -56,6 +57,11 @@ class AppPages {
       binding: BindingsBuilder(() {
         Get.lazyPut(() => CreateReminderController(Get.find()));
       }),
+    ),
+    GetPage(
+      // Tela 100% decorativa: sem controller/repository, então sem binding.
+      name: AppRoutes.faq,
+      page: () => const FaqPage(),
     ),
   ];
 }
