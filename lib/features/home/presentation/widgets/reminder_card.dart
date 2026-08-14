@@ -5,11 +5,15 @@ import 'package:tomora/features/home/data/models/reminder_model.dart';
 class ReminderCard extends StatelessWidget {
   final ReminderModel reminder;
   final ReminderStatus status;
+  final VoidCallback onTake;
+  final VoidCallback onDelete;
 
   const ReminderCard({
     super.key,
     required this.reminder,
     required this.status,
+    required this.onTake,
+    required this.onDelete,
   });
 
   @override
@@ -22,6 +26,7 @@ class ReminderCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // imagem do medicamento
 
@@ -58,6 +63,38 @@ class ReminderCard extends StatelessWidget {
                   _buildStatus(),
               ],
             ),
+          ),
+
+          // Botões de ação: marcar como tomado e excluir
+          Column(
+            children: [
+              if (status != ReminderStatus.taken)
+                IconButton(
+                  onPressed: onTake,
+                  icon: const Icon(
+                    Icons.check_circle_outline,
+                    color: Colors.white,
+                  ),
+                  tooltip: 'Marcar como tomado',
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.white24,
+                  ),
+                ),
+
+              const SizedBox(height: 6),
+
+              IconButton(
+                onPressed: onDelete,
+                icon: const Icon(
+                  Icons.delete_outline,
+                  color: Colors.white,
+                ),
+                tooltip: 'Excluir lembrete',
+                style: IconButton.styleFrom(
+                  backgroundColor: Colors.white24,
+                ),
+              ),
+            ],
           ),
         ],
       ),

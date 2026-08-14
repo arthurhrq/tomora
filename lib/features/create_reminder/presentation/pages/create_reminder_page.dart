@@ -90,9 +90,10 @@ class CreateReminderPage extends GetView<CreateReminderController> {
         const Text(
           'Novo Lembrete',
           style: TextStyle(
-            color: Colors.white,
+            color: AppColors.verde,
             fontSize: 24,
             fontWeight: FontWeight.bold,
+            fontFamily: 'Poppins'
           ),
         ),
 
@@ -100,9 +101,9 @@ class CreateReminderPage extends GetView<CreateReminderController> {
 
         Expanded(
           child: Container(
-            height: 3,
+            height: 7,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.6),
+              color: AppColors.verde,
               borderRadius: BorderRadius.circular(10),
             ),
           ),

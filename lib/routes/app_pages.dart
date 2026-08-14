@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tomora/features/account_conection/data/repository/connection_repository.dart';
 import 'package:tomora/features/account_conection/presentation/controllers/connect_account_controller.dart';
 import 'package:tomora/features/account_conection/presentation/pages/connect_account_page.dart';
@@ -10,7 +9,6 @@ import 'package:tomora/features/auth/presentation/pages/login_page.dart';
 import 'package:tomora/features/auth/presentation/pages/sign_page.dart';
 import 'package:tomora/features/create_reminder/presentation/controllers/create_reminder_controller.dart';
 import 'package:tomora/features/create_reminder/presentation/pages/create_reminder_page.dart';
-import 'package:tomora/features/home/data/repository/reminder_repository.dart';
 import 'package:tomora/features/home/presentation/controllers/home_controller.dart';
 import 'package:tomora/features/home/presentation/pages/home_page.dart';
 import 'package:tomora/routes/app_routes.dart';
@@ -47,25 +45,16 @@ class AppPages {
     GetPage(
       name: AppRoutes.home,
       page: () => HomePage(),
+      // ReminderRepository e AlarmService já são globais (main.dart)
       binding: BindingsBuilder(() {
-        Get.lazyPut(
-          () => ReminderRepository(Supabase.instance.client),
-        );
-        Get.lazyPut(
-          () => HomeController(Get.find()),
-        );
+        Get.lazyPut(() => HomeController(Get.find()));
       }),
     ),
     GetPage(
       name: AppRoutes.create,
       page: () => const CreateReminderPage(),
       binding: BindingsBuilder(() {
-        Get.lazyPut(
-          () => ReminderRepository(Supabase.instance.client),
-        );
-        Get.lazyPut(
-          () => CreateReminderController(Get.find()),
-        );
+        Get.lazyPut(() => CreateReminderController(Get.find()));
       }),
     ),
   ];

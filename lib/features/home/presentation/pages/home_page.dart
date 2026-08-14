@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tomora/core/theme/app_colors.dart';
+import 'package:tomora/features/home/data/models/reminder_model.dart';
 import 'package:tomora/features/home/presentation/controllers/home_controller.dart';
 import 'package:tomora/features/home/presentation/widgets/home_bottom_navigation.dart';
 import 'package:tomora/features/home/presentation/widgets/reminder_card.dart';
@@ -26,7 +27,7 @@ class HomePage extends GetView<HomeController> {
               _buildHeader(),
 
               Expanded(
-                child: _buildReminders(),
+                child: _buildReminders(context),
               ),
             ],
           );
@@ -83,7 +84,7 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
-  Widget _buildReminders() {
+  Widget _buildReminders(BuildContext context) {
     if (controller.reminders.isEmpty) {
       return const Center(
         child: Text(
@@ -110,8 +111,47 @@ class HomePage extends GetView<HomeController> {
         return ReminderCard(
           reminder: reminder,
           status: status,
+          onTake: () => controller.markAsTaken(reminder),
+          onDelete: () => _confirmDelete(context, reminder),
         );
       },
     );
+  }
+
+  Future<void> _confirmDelete(
+    BuildContext context,
+    ReminderModel reminder,
+  ) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.cordefundo,
+        title: const Text(
+          'Excluir lembrete',
+          style: TextStyle(color: Colors.white),
+        ),
+        content: Text(
+          'Tem certeza que deseja excluir "${reminder.name}"?',
+          style: const TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text(
+              'Excluir',
+              style: TextStyle(color: Colors.redAccent),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      controller.deleteReminder(reminder);
+    }
   }
 }

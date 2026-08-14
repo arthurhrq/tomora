@@ -4,9 +4,11 @@ import 'package:get/instance_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tomora/core/network/api_client.dart';
+import 'package:tomora/core/services/alarm_service.dart';
 import 'package:tomora/features/account_conection/data/repository/connection_repository.dart';
 import 'package:tomora/features/auth/data/services/auth_service.dart';
 import 'package:tomora/features/auth/presentation/controllers/user_controller.dart';
+import 'package:tomora/features/home/data/repository/reminder_repository.dart';
 import 'package:tomora/routes/app_pages.dart';
 import 'package:tomora/routes/app_routes.dart';
 
@@ -22,11 +24,17 @@ void main() async {
   // Inicializa o GetStorage
   await GetStorage.init();
 
-  // Registra as dependências
+  // Registra as dependências globais (permanentes)
   Get.put(ApiClient());
   Get.put(AuthService());
   Get.put(UserController(), permanent: true);
   Get.put(ConnectionRepository(Supabase.instance.client), permanent: true);
+  Get.put(ReminderRepository(Supabase.instance.client), permanent: true);
+
+  // Inicializa o serviço de alarme (Alarm.init() + listener de "tocando")
+  final alarmService = AlarmService();
+  await alarmService.init();
+  Get.put(alarmService, permanent: true);
 
   runApp(const MyApp());
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tomora/core/services/alarm_service.dart';
 import 'package:tomora/core/widgets/snackbar.dart';
 import 'package:tomora/features/auth/presentation/controllers/user_controller.dart';
 import 'package:tomora/features/home/data/repository/reminder_repository.dart';
@@ -52,7 +53,7 @@ class CreateReminderController extends GetxController {
     try {
       final currentUser = Get.find<UserController>().user;
 
-      await repository.createReminder(
+      final createdReminder = await repository.createReminder(
         userId: int.parse(currentUser.id),
         name: name,
         dosage: dosage,
@@ -60,12 +61,13 @@ class CreateReminderController extends GetxController {
         time: _formattedTime,
       );
 
+      // Agenda o alarme local desse aparelho pro novo lembrete
+      await Get.find<AlarmService>().scheduleReminder(createdReminder);
+
       AppSnackbar.sucess('Lembrete criado com sucesso!');
       Get.back();
     } catch (e) {
-      print(e);
       AppSnackbar.error('Erro ao criar lembrete');
-      print(e);
     } finally {
       loading.value = false;
     }

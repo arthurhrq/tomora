@@ -53,9 +53,10 @@ class ReminderRepository {
         .toList();
   }
 
-  /// Cria um novo lembrete para o usuário informado.
+  /// Cria um novo lembrete para o usuário informado e retorna o registro
+  /// criado (com o id gerado pelo banco), necessário para agendar o alarme.
   /// [time] deve estar no formato "HH:mm".
-  Future<void> createReminder({
+  Future<ReminderModel> createReminder({
     required int userId,
     required String name,
     required String dosage,
@@ -65,16 +66,49 @@ class ReminderRepository {
   }) async {
     final now = DateTime.now().toIso8601String();
 
-    await supabase.from('Reminder').insert({
+    final response = await supabase
+        .from('Reminder')
+        .insert({
+          'userId': userId,
+          'name': name,
+          'dosage': dosage,
+          'desc': desc,
+          'time': time,
+          'active': true,
+          'callAlexa': callAlexa,
+          'createdAt': now,
+          'updatedAt': now,
+        })
+        .select()
+        .single();
+
+    return ReminderModel.fromJson(response);
+  }
+
+  /// "Exclui" o lembrete. Na prática desativa (active = false) em vez de
+  /// apagar de verdade, pra não quebrar o histórico (History) que já
+  /// referencia esse reminderId.
+  Future<void> deleteReminder(int reminderId) async {
+    await supabase
+        .from('Reminder')
+        .update({'active': false})
+        .eq('id', reminderId);
+  }
+
+  /// Registra no histórico se o lembrete foi tomado ou não, para o
+  /// horário agendado informado.
+  Future<void> recordHistory({
+    required int userId,
+    required int reminderId,
+    required DateTime scheduledFor,
+    required bool taken,
+  }) async {
+    await supabase.from('History').insert({
       'userId': userId,
-      'name': name,
-      'dosage': dosage,
-      'desc': desc,
-      'time': time,
-      'active': true,
-      'callAlexa': callAlexa,
-      'createdAt': now,
-      'updatedAt': now,
+      'reminderId': reminderId,
+      'scheduledFor': scheduledFor.toIso8601String(),
+      'takenAt': taken ? DateTime.now().toIso8601String() : null,
+      'taken': taken,
     });
   }
 }

@@ -11,9 +11,9 @@ class HomeBottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 72,
+      height: 88,
       decoration: const BoxDecoration(
-        color: AppColors.verde,
+        color: AppColors.campo,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(18),
         ),
@@ -21,6 +21,7 @@ class HomeBottomNavigation extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          SizedBox(width: 4,),
           _item(
             icon: Icons.home_outlined,
             label: 'Home',
@@ -50,6 +51,7 @@ class HomeBottomNavigation extends StatelessWidget {
               Get.toNamed('/settings');
             },
           ),
+          SizedBox(width: 0,),
         ],
       ),
     );
@@ -67,14 +69,16 @@ class HomeBottomNavigation extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: Colors.white,
-            size: 27,
+            color: AppColors.branco,
+            size: 36,
           ),
           Text(
             label,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.branco,
               fontSize: 10,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w800
             ),
           ),
         ],
