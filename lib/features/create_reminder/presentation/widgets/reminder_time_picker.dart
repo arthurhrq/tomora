@@ -47,9 +47,10 @@ class _ReminderTimePickerState extends State<ReminderTimePicker> {
             child: Text(
               ':',
               style: TextStyle(
+                fontFamily: 'Poppins',
                 color: Colors.white,
                 fontSize: 26,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -93,13 +94,14 @@ class _ReminderTimePickerState extends State<ReminderTimePicker> {
               child: Text(
                 index.toString().padLeft(2, '0'),
                 style: TextStyle(
+                  fontFamily: 'Poppins',
                   color: isSelected
                       ? Colors.white
                       : Colors.white.withOpacity(0.4),
                   fontSize: isSelected ? 24 : 20,
                   fontWeight: isSelected
-                      ? FontWeight.bold
-                      : FontWeight.normal,
+                      ? FontWeight.w700
+                      : FontWeight.w400,
                 ),
               ),
             );

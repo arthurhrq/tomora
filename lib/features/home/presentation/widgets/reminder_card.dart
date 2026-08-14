@@ -19,17 +19,27 @@ class ReminderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 23),
-      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: 18),
+      padding: const EdgeInsets.fromLTRB(
+        26,
+        22,
+        16,
+        16,
+      ),
       decoration: BoxDecoration(
         color: _getColor(),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.10),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // imagem do medicamento
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,26 +47,57 @@ class ReminderCard extends StatelessWidget {
                 Text(
                   reminder.name,
                   style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 17,
                     color: Colors.white,
                   ),
                 ),
 
-                Text(
-                  'Dosagem: ${reminder.dosage}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                const SizedBox(height: 8),
+
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.medication_outlined,
+                      color: Colors.white70,
+                      size: 18,
+                    ),
+                    const SizedBox(width: 7),
+                    Expanded(
+                      child: Text(
+                        'Dosagem: ${reminder.dosage}',
+                        style: const TextStyle(
+                          fontFamily: 'Poppins',
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
 
-                Text(
-                  'Horário: ${reminder.time}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                const SizedBox(height: 4),
+
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.access_time_rounded,
+                      color: Colors.white70,
+                      size: 22,
+                    ),
+                    const SizedBox(width: 7),
+                    Text(
+                      'Horário: ${reminder.time}',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
                 ),
 
                 if (status != ReminderStatus.pending)
@@ -65,33 +106,39 @@ class ReminderCard extends StatelessWidget {
             ),
           ),
 
-          // Botões de ação: marcar como tomado e excluir
+          const SizedBox(width: 10),
+
           Column(
             children: [
               if (status != ReminderStatus.taken)
                 IconButton(
                   onPressed: onTake,
                   icon: const Icon(
-                    Icons.check_circle_outline,
+                    Icons.check_rounded,
                     color: Colors.white,
+                    size: 21,
                   ),
                   tooltip: 'Marcar como tomado',
                   style: IconButton.styleFrom(
-                    backgroundColor: Colors.white24,
+                    backgroundColor: Colors.white.withOpacity(0.18),
+                    padding: const EdgeInsets.all(10),
                   ),
                 ),
 
-              const SizedBox(height: 6),
+              if (status != ReminderStatus.taken)
+                const SizedBox(height: 5),
 
               IconButton(
                 onPressed: onDelete,
                 icon: const Icon(
-                  Icons.delete_outline,
+                  Icons.delete_outline_rounded,
                   color: Colors.white,
+                  size: 21,
                 ),
                 tooltip: 'Excluir lembrete',
                 style: IconButton.styleFrom(
-                  backgroundColor: Colors.white24,
+                  backgroundColor: Colors.white.withOpacity(0.18),
+                  padding: const EdgeInsets.all(10),
                 ),
               ),
             ],
@@ -120,22 +167,25 @@ class ReminderCard extends StatelessWidget {
         : 'Não tomou';
 
     return Container(
-      margin: const EdgeInsets.only(top: 4),
+      margin: const EdgeInsets.only(top: 12),
       padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 3,
+        horizontal: 11,
+        vertical: 5,
       ),
       decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.12),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.white54,
+          color: Colors.white38,
         ),
       ),
       child: Text(
         text,
         style: const TextStyle(
+          fontFamily: 'Poppins',
           color: Colors.white,
           fontSize: 11,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );

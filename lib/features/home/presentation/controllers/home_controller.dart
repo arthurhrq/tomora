@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:tomora/core/services/alarm_service.dart';
 import 'package:tomora/core/widgets/snackbar.dart';
@@ -18,15 +20,46 @@ class HomeController extends GetxController {
 
   final userIds = <int>[];
 
+  /// De quanto em quanto tempo o Diário busca atualizações no banco
+  /// (ex: um lembrete que o cuidador acabou de cadastrar remotamente).
+  static const _pollingInterval = Duration(seconds: 15);
+  Timer? _pollingTimer;
+
   @override
   void onInit() {
     super.onInit();
     loadHome();
+    _startPolling();
   }
 
-  Future<void> loadHome() async {
+  @override
+  void onClose() {
+    _pollingTimer?.cancel();
+    super.onClose();
+  }
+
+  /// Liga a atualização automática em segundo plano. Cada "tick" busca
+  /// os lembretes/histórico atuais e reagenda os alarmes locais deste
+  /// aparelho, sem mostrar o spinner de carregamento (pra não interromper
+  /// quem já está olhando a tela).
+  void _startPolling() {
+    _pollingTimer?.cancel();
+    _pollingTimer = Timer.periodic(_pollingInterval, (_) {
+      _fetchAndSync(showLoading: false);
+    });
+  }
+
+  /// Carregamento "manual" (chamado no onInit, no botão de refresh e após
+  /// ações do usuário). Mostra o spinner de tela cheia.
+  Future<void> loadHome() => _fetchAndSync(showLoading: true);
+
+  /// Núcleo do carregamento: busca lembretes + histórico de hoje para os
+  /// usuários relevantes (o próprio usuário, e o cuidador/medicado
+  /// vinculado, quando houver) e reagenda os alarmes locais deste
+  /// aparelho de acordo com o que veio do banco.
+  Future<void> _fetchAndSync({required bool showLoading}) async {
     try {
-      isLoading.value = true;
+      if (showLoading) isLoading.value = true;
 
       final currentUser = Get.find<UserController>().user;
 
@@ -61,10 +94,11 @@ class HomeController extends GetxController {
       );
 
       // Reagenda os alarmes locais deste aparelho de acordo com os
-      // lembretes atuais (garante que o alarme sempre reflita o banco).
+      // lembretes atuais (garante que o alarme sempre reflita o banco,
+      // inclusive lembretes cadastrados remotamente pelo cuidador).
       await Get.find<AlarmService>().rescheduleAll(reminders);
     } finally {
-      isLoading.value = false;
+      if (showLoading) isLoading.value = false;
     }
   }
 

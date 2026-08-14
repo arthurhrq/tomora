@@ -11,7 +11,7 @@ class ApiClient extends GetConnect {
     httpClient.baseUrl = ApiEndpoints.baseUrl;
 
     // Tempo máximo de espera
-    httpClient.timeout = const Duration(seconds: 20);
+    httpClient.timeout = const Duration(seconds: 40);
 
     // Interceptor: adiciona o token automaticamente em TODAS as requisições
     httpClient.addRequestModifier<dynamic>((request) {

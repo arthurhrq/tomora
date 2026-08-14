@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tomora/core/theme/app_colors.dart';
+import 'package:tomora/core/widgets/custom_text_field.dart';
 import 'package:tomora/core/widgets/primary_button.dart';
 import 'package:tomora/features/create_reminder/presentation/controllers/create_reminder_controller.dart';
-import 'package:tomora/features/create_reminder/presentation/widgets/reminder_text_field.dart';
 import 'package:tomora/features/create_reminder/presentation/widgets/reminder_time_picker.dart';
 import 'package:tomora/features/home/presentation/widgets/home_bottom_navigation.dart';
 
@@ -24,32 +24,53 @@ class CreateReminderPage extends GetView<CreateReminderController> {
 
               const SizedBox(height: 28),
 
-              ReminderTextField(
-                label: 'Nome',
-                hint: 'Digite o nome do medicamento',
-                icon: Icons.link,
-                controller: controller.nameController,
+              SizedBox(
+                width: double.infinity,
+                child: CampoPersonalizado(
+                  title: 'Nome',
+                  hintText: 'Digite o nome do medicamento',
+                  controller: controller.nameController,
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.only(left: 11.0),
+                    child: Icon(Icons.link, color: AppColors.branco),
+                  ),
+                ),
               ),
 
               const SizedBox(height: 20),
 
-              ReminderTextField(
-                label: 'Dosagem',
-                hint: 'Insira a dosagem',
-                icon: Icons.edit_outlined,
-                controller: controller.dosageController,
+              SizedBox(
+                width: double.infinity,
+                child: CampoPersonalizado(
+                  title: 'Dosagem',
+                  hintText: 'Insira a dosagem',
+                  controller: controller.dosageController,
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.only(left: 11.0),
+                    child: Icon(Icons.edit_outlined, color: AppColors.branco),
+                  ),
+                ),
               ),
 
               const SizedBox(height: 20),
 
-              ReminderTextField(
-                label: 'Descrição',
-                hint: 'Insira a descrição (opcional)',
-                icon: Icons.description_outlined,
-                controller: controller.descController,
+              SizedBox(
+                width: double.infinity,
+                child: CampoPersonalizado(
+                  title: 'Descrição',
+                  hintText: 'Insira a descrição (opcional)',
+                  controller: controller.descController,
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.only(left: 11.0),
+                    child: Icon(
+                      Icons.description_outlined,
+                      color: AppColors.branco,
+                    ),
+                  ),
+                ),
               ),
 
-              const SizedBox(height: 12),
+              const SizedBox(height: 22),
 
               Obx(
                 () => ReminderTimePicker(
@@ -60,7 +81,7 @@ class CreateReminderPage extends GetView<CreateReminderController> {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
 
               Center(
                 child: SizedBox(
