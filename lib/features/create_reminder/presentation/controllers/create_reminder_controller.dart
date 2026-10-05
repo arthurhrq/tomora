@@ -53,8 +53,35 @@ class CreateReminderController extends GetxController {
     try {
       final currentUser = Get.find<UserController>().user;
 
+      // O lembrete sempre pertence ao MEDICADO.
+      // Para MEDICADO, usamos o próprio ID. Para AUXILIAR, resolvemos
+      // o ID do medicado através do vínculo caregiverId.
+      final int reminderUserId;
+
+      if (currentUser.role == 'MEDICADO') {
+        reminderUserId = int.parse(currentUser.id);
+      } else if (currentUser.role == 'AUXILIAR') {
+        final medicados = await repository.getMedicadosDoAuxiliar(
+          int.parse(currentUser.id),
+        );
+
+        if (medicados.isEmpty) {
+          AppSnackbar.error(
+            'Este cuidador não possui um medicado associado.',
+          );
+          return;
+        }
+
+        // Pela regra do app, todo cuidador que pode criar lembretes
+        // possui um medicado associado.
+        reminderUserId = medicados.first;
+      } else {
+        AppSnackbar.error('Usuário sem perfil válido para criar lembrete.');
+        return;
+      }
+
       final createdReminder = await repository.createReminder(
-        userId: int.parse(currentUser.id),
+        userId: reminderUserId,
         name: name,
         dosage: dosage,
         desc: desc.isEmpty ? null : desc,

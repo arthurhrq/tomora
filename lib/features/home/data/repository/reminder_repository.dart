@@ -28,6 +28,22 @@ class ReminderRepository {
         .toList();
   }
 
+  /// Busca os IDs dos medicados vinculados a um auxiliar.
+  ///
+  /// No Tomora, a relação é representada pelo campo [caregiverId] do
+  /// usuário MEDICADO, que contém o ID do AUXILIAR responsável.
+  Future<List<int>> getMedicadosDoAuxiliar(int auxiliarId) async {
+    final response = await supabase
+        .from('User')
+        .select('id')
+        .eq('caregiverId', auxiliarId)
+        .eq('role', 'MEDICADO');
+
+    return (response as List)
+        .map<int>((json) => json['id'] as int)
+        .toList();
+  }
+
   /// Busca o histórico (tomado / não tomado) referente ao dia de hoje,
   /// para todos os userIds informados.
   Future<List<HistoryModel>> getTodayHistory(
