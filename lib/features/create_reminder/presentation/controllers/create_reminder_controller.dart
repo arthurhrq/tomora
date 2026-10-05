@@ -97,10 +97,11 @@ class CreateReminderController extends GetxController {
         await Get.find<AlarmService>().scheduleReminder(createdReminder);
       }
 
-      AppSnackbar.sucess('Lembrete criado com sucesso!');
-
       // Retorna automaticamente pra Home.
       Get.back();
+
+      // Mostra a confirmação de sucesso já na Home.
+      AppSnackbar.sucess('Lembrete criado com sucesso!');
     } catch (e) {
       AppSnackbar.error('Erro ao criar lembrete');
     } finally {
